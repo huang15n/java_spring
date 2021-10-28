@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	  
+	  <context:property-placeholder location="classpath:name.properties" />
+
+	
+
+  <bean id="classOne" class="ClassOne"> </bean>
+  
+  <bean id = "classTwo" class = "ClassTwo" ></bean>
+  
+  <bean id = "classThree" class = "ClassThree" >
+  </bean>
+
+  <bean id = "classFour" class = "ClassFour"> 
+<constructor-arg ref="classThree" />
+
+
+
+  </bean>
+  
+  
+  <bean id = "classFive" class = "ClassFive">
+<constructor-arg ref = "classThree" />
+
+</bean>
+
+<bean id = "classSix" class = "ClassSix">
+
+<property name = "anotherInterface" ref = "classThree"/>
+</bean>
+
+<bean id = "classSeven" class = "ClassSeven">
+<property name = "variable1" value = "${something.name1}" />
+<property name = "variable2" value = "${something.name2}" />
+
+
+</bean>
+  
+ 
+</beans> 
+ 

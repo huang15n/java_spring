@@ -1,7 +1,10 @@
 # Build your first Spring Boot Web App
 
 
-we are going to explain fully in detail, we can go broad and give you a broad understanding of what we can do with spring framework 
+we are going to explain fully in detail, we can go broad and give you a broad understanding of what we can do with spring framework, the first section only gets you a taste of spring framework.
+
+
+
 
 
 

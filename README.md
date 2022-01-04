@@ -3,12 +3,83 @@
 
 
 ## Preface 
-I will convey as much as I have to you. Going forward, you need to complete and follow along with examples, leverage github for branches, compares and forks, collaborate with other gurus. It is a great way to proceed in this and really get you over any little speed bumps. It does not stumble me up but it is going to trip you up to become a true expert/ guru on the spring framework. We will roll a lot of transcational processing and things into it that have scale 
+I will convey as much as I have to you. Going forward, you need to complete and follow along with examples, leverage github for branches, compares and forks, collaborate with other gurus. It is a great way to proceed in this and really get you over any little speed bumps. It does not stumble me up but it is going to trip you up to become a true expert/ guru on the spring framework. We will roll a lot of transcational processing and things into it that have scale. make yourself actively involved in the spring community, emerging practices. 
+
+Some opinionated design, a loosely concept in the industry. spring boot brings a number of opinionated default configruations. thus using spring boot is following an opinionated design. others are rigid. You can skip ahead if you have a solid foundation. Do not take offence. 
+
+
+Spring framework itself is considered to be opinionated because what it is doing is brining in a lot of configurations in the typical fanshion. 
+
+Best practice of a design including:
+1. OOP/ SOLID
+2. TDD
+3. Naming Convetions 
+4. Software development life cycles 
+
+
+Github: 
+1. try to emulate a real world software project
+2. use github, master branch
+3. follow mainline dev model
+4. step by step
+5. use github issues to plan work and tasks 
 
 
 
 
-Leave me a detailed message if you get stuck and I will jump in and go through it 
+the full project should consist of the following: 
+1. JavaBeans based app configuration IoC 
+2. Model View Controller presentation
+3. Praticial database access through JDBC, java persistent API, JAP or Spring Data JPA
+4. Application monitoring based on JMX
+5. Declarative Transaction Management using AOP
+6. data vadlidation that supports but is not dependent on the presentation layer 
+
+
+JSP is still very popular out there, one of the thing is Thymeleaf. 
+
+Views -- JSP with custom tags, webjars, boostrap/css, custom less 
+Controller -- spring @MVC annotations, bean validation 
+Service -- @Cachable, @Transactional 
+Repository: 3 spring profiles, spring data JPA, JPA default, JDBC. 
+
+
+
+Leave me a detailed message if you get stuck and I will jump in and go through it
+
+somethigns are really off. 
+database supprots HSQLDB default, mysql, postgreSQL. 
+connection parameters and drivers are declared into Maven profiles 
+DDL and DML SQL scripts for each database vendors 
+
+
+
+java based configurations such as spring xml configuration could be replaced by java configuration, checkout the javaconfig branch 
+
+
+unit testing framework, spring test, junit, HSQLDB, Mockito, AssertJ, Hamcrest, Json path. tests are shared between persistence technologies 
+
+going forward to spring to start off absolutely from beginning from scratch to reinforce what we have learnt 
+it is pivitol all times 
+
+
+
+
+
+
+
+## Run Spring App
+
+
+```java
+
+cd project-directory 
+./mvnw spring-boot:run 
+
+
+```
+
+a lot of depedencies will be downloaded to your local maven repository 
 
 
 
@@ -265,6 +336,10 @@ if you want to know what files have been ignored in your repository and you do n
 
 
 
+## Intellij
+Intelliji is what you can see the most of, a lot of shops are still on eclipse, it is still a batch process on my side. 
+
+
 
 
 
@@ -298,7 +373,59 @@ benefits of branches: as you can compare your source code, to the branch source 
 
 It is recommended for you to fork the repositories to your own github account, this allows you to build you github examples and great content to show to future employers 
 
+## Github Repository 
 
-## Intellij
-Intelliji is what you can see the most of, a lot of shops are still on eclipse, it is still a batch process on my side. 
+create a new repository 
+xx-xx-xx
+
+add gitignore Java not the standard one 
+
+it works pretty seamlessly with command line 
+
+show the hidden files 
+```shell
+ls -ltra 
+
+```
+
+ https://start.spring.io/
+
+ i will start making transitions right now to start to catch up the new release 
+
+
+Quite a few things to select there: 
+ 1. DevTools 
+ 2. Lombok 
+ 3. Spring Web
+ 4. Thymeleaf 
+ 5. MySQL
+ 6. H2
+ 7. JPA
+ 8. Actuator 
+
+that is a nice way to start off 
+
+
+CVS-> select git, add the project and type in your credentials in git 
+
+replace gitignore file with your desired or much comprehensives contents 
+just call out to start the spring and push to github and initialize externally 
+
+
+
+## issue trackers 
+
+we use github issue tracker, a typical workflow is you are gonna have your partners create issues in and you are going to work for them 
+
+
+github panel -> isssues screen -> new issue 
+
+
+
+we will work on issues and close out issues 
+
+
+
+
+
 

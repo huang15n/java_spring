@@ -1,4 +1,4 @@
-# Build a Spring Boot Web App
+# Build your first Spring Boot Web App
 
 
 we are going to explain fully in detail, we can go broad and give you a broad understanding of what we can do with spring framework 
@@ -219,6 +219,7 @@ now the identity value that is going to be leaking up into your object model. bu
 we need to make these entities fully fledged JPA entites that can be peristed by hibernate to a database 
 
 we want to make our POJOs to JPA obejct to 
+https://www.baeldung.com/jpa-many-to-many
 
 
 ### @Entity annotation 
@@ -262,7 +263,7 @@ that completes the annotations that are needed to set this up as an official JPA
 now we need to set many to many relationship which is tricky to set up, we will step through this 
 
 
-
+https://www.baeldung.com/jpa-many-to-many
 #### @ManyToMany(mappedBy = "author")
 in the Set<T> we will set 
 @ManyToMany(mappedBy = "author")
@@ -510,9 +511,9 @@ public class BootStrapData implements CommandLineRunner {
 
 spring will do the dependency injection into the class for an instance of the repository  
 
-@Component tells spring this is a component that needs to scn 
+@Component tells spring this is a component that needs to scan
 
-underneat hthe covers spring data jpa is utilitizing hibernate to  t osave thse in memory H2
+underneath the covers spring data jpa is utilitizing hibernate to  t osave thse in memory H2
 
 
 
@@ -945,15 +946,22 @@ restart the server again to let it take effect
 H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:1d89b159-311f-4447
 
 
-I toggle over to browser, 
+I toggle over to browser,  http://localhost:8080/h2-console/
 
-JDBC URL matches what we had before: jdbc:h2:~/test
+##### JDBC URL matches what we had before: jdbc:h2:~/test
 this creates database in memory , this is a very important piece right here 
 
 click on Connect 
 
 
 we are in fact loading data into in memory databsae, this h2 console is a very handy tool to use especially when you are developing if you are going through and altering your domain objects, you can get feedback pretty quick about what is going on in the database so this helps you with the debugging 
+
+H2-console is a very handy tools to use especially if you are going through and altering your model objects 
+
+when you first time run that jdbc to connect URL that will be a good chance that jdbc connect URL will be different 
+
+
+
 
 
 ## Spring MVC 
@@ -1002,6 +1010,21 @@ dispatch servlet -> model -> view -> dispatcher servlet
 
 it gets detail on what is under the covers 
 
+this is a true separation of corcerns,  the controller should be the traffic cop he should be deciding how to get the model and who to aks the model from. bad codes are a lot of controller overloaded and database connections done in the controllers are just awful 
+the controller is going to return the model to a view component, the view component whose purpose in life is to render the view for the client 
+
+
+thymeleaf will take pojo and look at our template and generate the html to return back to the client 
+
+it all works transparently and it works out well because everything separated 
+
+
+
+
+
+
+
+
 
 we will get a client request come in and that could be typically HTTP and it can be for a web page or a REST  service call, it goes to a dispatch servlet 
 we get web request comes in and it decides how to handle it and refers to the handler mapping 
@@ -1026,13 +1049,13 @@ spring controller
 this will register the class a spring bean and as a Controller in Spring MVC 
 2. to map methods to http request paths use @RequestMapping 
 
-to set up the request path, we are gonna use the annotaiton request map mapping to tell spring to associate a path with a controllre method 
+to set up the request path, we are gonna use the annotaiton request map mapping to tell spring to associate a path with a controller method 
 
 
 I have seen some projects where they get a little scattered and that is confusing for people 
 
 
-create a folder under the src/main/java called controlers 
+create a folder under the src/main/java called controllers 
 
 create XXXXController classes 
 
@@ -1064,12 +1087,31 @@ public class BookController {
 
 ```
 
+keep in mind this is what is going to return to the View 
+
 let's start adapting this to actually be in an actual controller 
 
 
 Model is going to return to the view, so the view will get a copy of the model 
 
-this is a spring managed component because it is controller when spring instantiate this it will inject an instance of that repsoitory into our controller 
+
+
+
+we want to enhance that model with a list of books 
+
+Repository, we are asking the Spring Framework to do is to inject a repository and generate a constructor command n to bring that up 
+now we have a constructor on that, this is a spring managed component because it is controller when spring instantiate this it will inject an instance of that repsoitory into our controller. and spring instantiate this will inject an isntance of that repository to our controller 
+
+
+ 
+
+
+
+
+
+
+
+
 
 
 ```java
@@ -1093,7 +1135,7 @@ public class BookController {
     @RequestMapping("/books")
     public String getBooks(Model model){
 
-        model.addAllAttributes("books", bookRepository.findAll())
+        model.addAllAttribute("books", bookRepository.findAll())
         return "books";
     }
 }
@@ -1105,10 +1147,16 @@ this is going to give us a list of items. now this model is going to get return 
 
 get your feet wet in the MVC 
 
-### Thymeleaf 
+now this model is going to return it back to our view layer and going to have an attribute 
 
 
-thymeleaf is ajava template engine, stable release in July 2011 rapidly gaining popularity in the spring community 
+
+### Thymeleaf --- View Technology 
+now going forward through a very simple example to get your feet wet with srping, somebody calls me out 
+
+it is pronounced as time leaf 
+
+thymeleaf is a java template engine, stable release in July 2011 rapidly gaining popularity in the spring community 
 thymeleaf is a nautral template engine, natural meaning yo ucan view templates in your browser 
 
 it is an alternative to java server pages 
@@ -1117,40 +1165,107 @@ JSP is so awful to work with
 
 we are going to get thymeleaf cooking, we need to bring in the spring boot starter for thymeleaf 
 
+in pom.xml
+```xml 
+
+	<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
+        	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${project.parent.version}</version>
+			</plugin>
+		</plugins>
+	</build>
+
+
+```
+
 this is the curated dependency for thymeleaf so it takes all the thought out of what we need to do, nothing particular earth shattering here 
+
+depenencies in maven of the intellij will tell you the thymeleaf
 
 toggle over to the browser real quick 
 
+let's get themeleaf cooking 
 
-create a html file under templates:
+we need to bring in the spring boot starter for themeleaf. 
+I am going to expand this out a little bit 
+
+
+resources -> templates 
+
+
+create a html file called list.html under templates, sit here and type out entire html:
 
 ```html
+
+
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>thymeleaf</title>
+    <meta charset="UTF-8"/>
+    <title>Spring Framework Guru</title>
 </head>
 <body>
-
-
-<h1> books</h1>
+<h1>Book List</h1>
 
 <table>
-  <tr>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Publisher</th>
+    </tr>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Publisher</th>
+    </tr>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Publisher</th>
+    </tr>
 
-    <th> ID</th>
-    <th> Ttitle</th>
-    <th> Publisher</th>
-  </tr>
-  <tr th:each="book:${books}}">
+</table>
 
-    <td th:text="${book.id}">   </td>
-    <td th:text="${book.title}>  </td>
-    <td th:text="${book.publiser.name}>  </td>
-  </tr>
+</body>
+</html>
+
+```
+
+tr -> th:each="variable: ${modelName}" 
+td -> th:"${variable.id}"
+
+nothing earth shattering here 
+```html
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spring Framework Guru</title>
+</head>
+<body>
+<h1>Book List</h1>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Publisher</th>
+    </tr>
+    <tr th:each ="books">
+        <td th:text="${book.id}" >ID</td>
+        <td th:text="${book.title}}"> Title </td>
+        <td th:text="${book.isbn}}"> ISBN </td>
 
 
+    </tr>
 
 
 </table>
@@ -1169,8 +1284,53 @@ we will have to create a thymleaf namespace in
 this work through attribute out of that simple namespace which tealls thymeleaf to do stuff 
 we want themleaf to replace those things 
 
+http://localhost:8080/
 
-### remember to out your html to static folder!!! not the template folder!!! remember to use xxx.html at the end when returning it  
+
+###  note at this point you are very likely to run to the problem 
+Whitelabel Error Page
+This application has no explicit mapping for /error, so you are seeing this as a fallback.
+
+Mon Jan 03 19:20:09 EST 2022
+There was an unexpected error (type=Not Found, status=404).
+
+this works with regular string and @RestMapping only or     @ResponseBody after     @RequestMapping("/")
+ 
+
+When using @RestController like this:
+```java
+@RestController
+public class HomeController {
+
+    @RequestMapping("/")
+    public String welcome() {
+        return "login";
+    }
+}
+```
+This is the same as you do like this in a normal controller:
+```java
+@Controller
+public class HomeController {
+
+    @RequestMapping("/")
+    @ResponseBody
+    public String welcome() {
+        return "login";
+    }
+}
+```
+Using @ResponseBody returns return "login"; as a String object. Any object you return will be attached as payload in the HTTP body as JSON.
+
+This is why you are getting just login in the response.
+
+other causes: https://www.yawintutor.com/application-has-no-explicit-mapping-for-error-whitelabel-error-page-with-status-404/
+
+some sources suggeted @ComponentScan(basePackages ={"com.uwindsor.firstApp.controllers"})
+ but it did nto work 
+
+ 
+
 
 ```java
 package eddie.work.out.eddiehuang.controllers;
@@ -1209,6 +1369,79 @@ public class BookController {
 
 
 
+don't have to reimport manually each time. You can enable auto-import as documented here. Change this in Settings -> Maven -> Import Maven projects automatically.
+
+
+the root cause is the pom.xml file, please replace it with the correct content below: 
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.2.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<groupId>guru.springframework</groupId>
+	<artifactId>spring5webapp</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<name>spring5webapp</name>
+
+	<description>Example Spring 5 Web Application</description>
+
+	<properties>
+		<java.version>11</java.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
+
+
+```
 
 
 
@@ -1217,9 +1450,77 @@ public class BookController {
 
 
 
+let's create a author's page 
+
+
+```html
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spring Framework Guru</title>
+</head>
+<body>
+<h1>Book List</h1>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Publisher</th>
+    </tr>
+ <tr th:each="author:${authors}">
+     <td th:text="${author.lastName}"> </td>
+     <td th:text="${author.firstName}"> </td>
+
+
+ </tr>
+
+
+</table>
+
+</body>
+</html>
+
+```
+
+
+```java
+package com.uwindsor.firstApp.controllers;
+
+
+import com.uwindsor.firstApp.repositories.AuthorRepository;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class AuthorController {
+
+    private AuthorRepository authorRepository;
+
+    public AuthorController(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
+    }
+
+    @RequestMapping("/authors")
+    public String getAuthors(Model model){
+        model.addAttribute("authors", authorRepository.findAll());
+
+
+        return "books/authors";
+    }
+}
+
+
+```
 
 
 
+
+I want to go through it and it has been updated, it is some old bagage out there, some of it is misleading or just plain incorrect 
+
+that is partly due to the success of the framework because it's been so popular and also how it's evolved over time 
 
 
 

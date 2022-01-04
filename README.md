@@ -1,4 +1,4 @@
-# java_spring
+# Java Spring and Spring Boot Application Development 
 
 
 
@@ -49,21 +49,6 @@ sudo apt-get install gradle
 https://www.jetbrains.com/help/idea/installation-guide.html
 
 INtellij will lose its mind and we reindexed the project, we got to the file and validate caches and restart, it is bizzare. it broke how intellij picks up the classpat hand all the jars in the class. that is a hidden cost. it is a good way to get you quickly rolling again, you better progress through it and hit a problem that you cannot resolve. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

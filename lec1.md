@@ -945,7 +945,9 @@ spring.datasource.url=jdbc:h2:mem:testdb
 ```
 
 restart the server again to let it take effect 
-H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:1d89b159-311f-4447
+H2 console available at '/h2-console'.
+
+copy this string: Database available at 'jdbc:h2:mem:1d89b159-311f-4447
 
 
 I toggle over to browser,  http://localhost:8080/h2-console/

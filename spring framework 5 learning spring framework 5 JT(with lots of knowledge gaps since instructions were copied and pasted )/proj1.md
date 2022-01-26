@@ -290,7 +290,7 @@ move test folder to web resource folder
 
 go to maven -> run clean -> run package 
 
-we will be building out web module as we gong forward 
+we will be building out web module as we going forward 
 
 if you go to target folder, you will see we build the jar 
 

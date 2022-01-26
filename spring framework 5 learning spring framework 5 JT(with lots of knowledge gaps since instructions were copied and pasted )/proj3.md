@@ -421,6 +421,13 @@ public class VetController {
 
 ```
 
+if CommandRunner is not called: 
+our Bootstrap class is on the package com.project.demo.data
+
+Your command line runner is on the package com.project.data.runner
+
+Spring will scan for components in the sub-packages of com.project.demo.data, that is, in com.project.demo.data.*, that's why your command line runner is never ran. He's never found by Spring.
+
 
 
 create index pages for ownerservices and vetservices 
@@ -1096,4 +1103,53 @@ we are allowing our persistent layer to do it
 
 
 
+
+## Error 
+Description:
+
+Parameter 0 of constructor in com.uwindsor.general.startup.CommandStarter required a bean of type 'services.FireFighterService' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'services.FireFighterService' in your configuration.
+
+
+
+
+
+Process finished with exit code 1
+
+
+C:\Users\Eddie\Desktop\general\web\src\main\java\com\uwindsor\general\startup\CommandStarter.java:4:32
+java: package com.uwindsor.data.models does not exist
+C:\Users\Eddie\Desktop\general\web\src\main\java\com\uwindsor\general\startup\CommandStarter.java:7:34
+java: package com.uwindsor.data.services does not exist
+C:\Users\Eddie\Desktop\general\web\src\main\java\com\uwindsor\general\startup\CommandStarter.java:13:19
+java: cannot find symbol
+  symbol:   class PoliceService
+  location: class com.uwindsor.general.startup.CommandStarter
+C:\Users\Eddie\Desktop\general\web\src\main\java\com\uwindsor\general\startup\CommandStarter.java:15:27
+java: cannot find symbol
+  symbol:   class PoliceService
+  location: class com.uwindsor.general.startup.CommandStarter
+C:\Users\Eddie\Desktop\general\web\src\main\java\com\uwindsor\general\startup\CommandStarter.java:22:9
+java: cannot find symbol
+  symbol:   class Police
+  location: class com.uwindsor.general.startup.CommandStarter
+C:\Users\Eddie\Desktop\general\web\src\main\java\com\uwindsor\general\startup\CommandStarter.java:22:25
+java: cannot find symbol
+  symbol:   class Police
+  location: class com.uwindsor.general.startup.CommandStarter
+C:\Users\Eddie\Desktop\general\web\src\main\java\com\uwindsor\general\startup\CommandStarter.java:30:9
+java: cannot find symbol
+  symbol:   class Police
+  location: class com.uwindsor.general.startup.CommandStarter
+C:\Users\Eddie\Desktop\general\web\src\main\java\com\uwindsor\general\startup\CommandStarter.java:30:25
+java: cannot find symbol
+  symbol:   class Police
+  location: class com.uwindsor.general.startup.CommandStarter
+
+
+It might be because the project has been broken down into different modules.
 

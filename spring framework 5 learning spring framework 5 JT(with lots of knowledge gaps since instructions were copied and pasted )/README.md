@@ -284,6 +284,15 @@ that will create a branch and check you out all in one step
 
 
 
+## When starting a new maven module
+right click on the root module-> create -> Modules-> Maven -> choose name 
+
+refactor code into web, data 
+
+compile, build, maven project 
+
+
+
 
 ##  gitignore 
 
